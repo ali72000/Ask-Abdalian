@@ -1,19 +1,19 @@
 import streamlit as st
 import openai
 
+# Set your API key securely
+client = openai.OpenAI(api_key=st.secrets["openai_api_key"])
+
 st.set_page_config(page_title="AskAbdalian 🤖", layout="centered")
 st.title("AskAbdalian 🤖")
 st.markdown("Ask anything, powered by OpenAI!")
-
-# Securely fetch the API key
-openai.api_key = st.secrets["openai_api_key"]
 
 user_question = st.text_input("What's your question?")
 
 if st.button("Get Answer") and user_question:
     try:
         with st.spinner("Thinking..."):
-            response = openai.ChatCompletion.create(
+            response = client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a helpful assistant for Cadet College Hasanabdal."},
